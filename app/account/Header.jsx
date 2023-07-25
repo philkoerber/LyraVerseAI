@@ -19,13 +19,19 @@ function Header(props) {
           href="/link1"
           className="text-white hover:text-gray-400 transition duration-300"
         >
-          Link 1
+          Create
+        </a>
+        <a
+          href="/link1"
+          className="text-white hover:text-gray-400 transition duration-300"
+        >
+          Your texts
         </a>
         <a
           href="/link2"
           className="text-white hover:text-gray-400 transition duration-300"
         >
-          Link 2
+          Profile
         </a>
         {/* Add more links as needed */}
       </div>
