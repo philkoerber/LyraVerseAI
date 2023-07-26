@@ -2,11 +2,9 @@ import Header from "./Header"
 
 export default function RootLayout({ children }) {
   return (
-    <html>
-          <body>
+          <div>
               <Header />
               {children}
-          </body>
-    </html>
+          </div>
   )
 }
