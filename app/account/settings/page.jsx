@@ -3,13 +3,11 @@ import { cookies } from 'next/headers'
 import AccountForm from './account-form'
 
 
-async function Settings(props) {
+async function Settings() {
       const supabase = createRouteHandlerClient({ cookies })
 
 
-      const {
-    data: { session },
-    } = await supabase.auth.getSession()
+      const {data: { session },} = await supabase.auth.getSession()
     
     return (
         <div>
