@@ -1,7 +1,6 @@
 import React from 'react';
 import Lyric from './Lyric';
 import supabase from '@/app/utils/supabase';
-import session from '@/app/utils/session';
 
 const initialItems = [
   "The face in the mirror doesn't belong to me; it's a disguise I wear to navigate this nightmarish dream.",
@@ -32,7 +31,8 @@ const lyric = {
   lyrics: initialItems
 }
 
-async function Create({params}) {
+async function Create({ params }) {
+  const { data: { session }, } = await supabase.auth.getSession()
 
 
 
@@ -41,7 +41,7 @@ async function Create({params}) {
     return (
       <div className='w-screen flex justify-center items-center p-8'>
 
-        <Lyric lyric={lyric} session={session} />
+        <Lyric lyric={lyric} session={session} lyricfromdb={params.lyric} />
         </div>
     );
 }

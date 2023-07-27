@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ReorderGroup from './ReorderGroup';
 
-function Lyric({ lyric, session }) {
+function Lyric({ lyric, session, lyricfromdb }) {
     const supabase = createClientComponentClient()
 
     const user = session?.user
@@ -23,6 +23,10 @@ function Lyric({ lyric, session }) {
             .from("lyrics")
             .insert([{}])
     };
+
+    useEffect(() => {
+        console.log(lyricfromdb)
+    },[])
 
 //      async function updateProfile({ username}) {
 //     try {
