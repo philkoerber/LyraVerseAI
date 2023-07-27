@@ -1,7 +1,7 @@
 import React from 'react';
 import Lyric from './Lyric';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import supabase from '@/app/utils/supabase';
+import session from '@/app/utils/session';
 
 const initialItems = [
   "The face in the mirror doesn't belong to me; it's a disguise I wear to navigate this nightmarish dream.",
@@ -33,11 +33,9 @@ const lyric = {
 }
 
 async function Create({params}) {
-  const supabase = createRouteHandlerClient({ cookies })
 
-      const {
-    data: { session },
-    } = await supabase.auth.getSession()
+
+
 
   
     return (

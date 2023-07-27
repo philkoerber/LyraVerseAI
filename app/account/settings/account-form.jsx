@@ -15,7 +15,7 @@ export default function AccountForm({ session }) {
       let { data, error, status } = await supabase
         .from('profiles')
         // .select(`username, website, avatar_url`)
-        .select('username, lyrics')
+        .select('username')
         .eq('id', user?.id)
         .single()
 
