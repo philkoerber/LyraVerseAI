@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Create(props) {
+function YourTexts(props) {
     return (
         <div>
-            your texts.....
+            
         </div>
     );
 }
 
-export default Create;
+export default YourTexts;

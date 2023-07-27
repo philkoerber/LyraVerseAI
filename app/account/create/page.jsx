@@ -1,5 +1,7 @@
 import React from 'react';
 import Lyric from './lyric/Lyric';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 const initialItems = [
   "The face in the mirror doesn't belong to me; it's a disguise I wear to navigate this nightmarish dream.",
@@ -24,12 +26,25 @@ const initialItems = [
   "The intersection of reality and dreams is where the truth lies, obscured by the haze of illusion.",
 ];
 
-function Create(props) {
+const lyric = {
+  id: "asdfasdfsaifjosfpoasasi",
+  header: "william",
+  lyrics: initialItems
+}
+
+async function Create(props) {
+  const supabase = createRouteHandlerClient({ cookies })
+
+
+      const {
+    data: { session },
+    } = await supabase.auth.getSession()
 
   
     return (
       <div className='w-screen flex justify-center items-center p-8'>
-        <Lyric initialItems={initialItems} />
+
+        <Lyric lyric={lyric} session={session} />
         </div>
     );
 }

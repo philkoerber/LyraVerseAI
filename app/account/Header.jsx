@@ -17,12 +17,6 @@ function Header(props) {
           Create
         </a>
         <a
-          href="/account/yourtexts"
-          className="text-white hover:text-gray-400 transition duration-300"
-        >
-          Your texts
-        </a>
-        <a
           href="/account/settings"
           className="text-white hover:text-gray-400 transition duration-300"
         >

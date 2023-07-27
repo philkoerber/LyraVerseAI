@@ -5,10 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 export default function AccountForm({ session }) {
   const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(true)
-  const [fullname, setFullname] = useState(null)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
   const user = session?.user
 
   const getProfile = useCallback(async () => {
@@ -17,7 +14,8 @@ export default function AccountForm({ session }) {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
+        // .select(`username, website, avatar_url`)
+        .select('username, lyrics')
         .eq('id', user?.id)
         .single()
 
@@ -26,10 +24,7 @@ export default function AccountForm({ session }) {
       }
 
       if (data) {
-        setFullname(data.full_name)
         setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
       alert('Error loading user data!')
@@ -42,16 +37,13 @@ export default function AccountForm({ session }) {
     getProfile()
   }, [user, getProfile])
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ username}) {
     try {
       setLoading(true)
 
       let { error } = await supabase.from('profiles').upsert({
         id: user?.id,
-        full_name: fullname,
         username,
-        website,
-        avatar_url,
         updated_at: new Date().toISOString(),
       })
       if (error) throw error
@@ -64,26 +56,13 @@ export default function AccountForm({ session }) {
   }
 
   return (
-    <div className="bg-gray-600">
-
-
-
-      
-
-
+    <div className='flex justify-center items-center'>
+      <div className="w-fit flex flex-col items-end justify-center mt-3 gap-4">
       <div >
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session?.user.email} disabled />
       </div>
-      <div>
-        <label htmlFor="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          value={fullname || ''}
-          onChange={(e) => setFullname(e.target.value)}
-        />
-      </div>
+      
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -93,20 +72,11 @@ export default function AccountForm({ session }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="url"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
-
+      
       <div>
         <button
           className=""
-          onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+          onClick={() => updateProfile({ username })}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
@@ -121,5 +91,7 @@ export default function AccountForm({ session }) {
         </form>
       </div>
     </div>
+    </div>
+    
   )
 }

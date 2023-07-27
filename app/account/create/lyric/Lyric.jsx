@@ -1,16 +1,74 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Reorder } from "framer-motion";
 import { useState } from 'react';
 import ButtonGroup from './ButtonGroup';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import ReorderGroup from './ReorderGroup';
 
-function Lyric({ initialItems }) {
-    const [items, setItems] = useState(initialItems);
+function Lyric({ lyric, session }) {
+    const supabase = createClientComponentClient()
 
-    useEffect(() => {
-        console.log(items)
-    }, [items])
+    const user = session?.user
+
+    const [items, setItems] = useState(lyric.lyrics);
+    const [username, setUsername] = useState()
+    const [loading, setLoading] = useState()
+        const [updateTimeout, setUpdateTimeout] = useState(null);
+
+
+
+    const getProfile = useCallback(async () => {
+    try {
+      setLoading(true)
+
+      let { data, error, status } = await supabase
+        .from('profiles')
+        // .select(`username, website, avatar_url`)
+        .select('username, lyrics')
+        .eq('id', user?.id)
+        .single()
+
+      if (error && status !== 406) {
+        throw error
+      }
+
+      if (data) {
+        setUsername(data.username)
+      }
+    } catch (error) {
+      alert('Error loading user data!')
+    } finally {
+      setLoading(false)
+    }
+  }, [user, supabase])
+
+  useEffect(() => {
+    getProfile()
+  }, [user, getProfile])
+    
+    // Dummy update function
+    const updateLyric = () => {
+        console.log("Update function called!");
+        // Replace this with your actual update logic
+    };
+
+    const handleReorder = (items) => {
+        setItems(items);
+
+        // Clear previous timeout
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
+
+        // Set a new timeout to call the update function after 500ms
+        setUpdateTimeout(setTimeout(() => {
+            // Call your update function here
+            // Replace the following line with your actual update function call
+            updateLyric();
+        }, 500));
+    };
 
   const handleTextChange = (itemToUpdate, newValue) => {
         if (itemToUpdate === newValue) {
@@ -27,30 +85,7 @@ function Lyric({ initialItems }) {
     };
 
     return (
-        <Reorder.Group axis="y" values={items} onReorder={setItems} className='flex flex-col justify-center items-center'>
-            {items.map((item) => {
-                return (
-                    <Reorder.Item
-                        key={item}
-                        value={item}
-                        className='flex items-center'
-                    >
-                        <div className='bg-gray-200 w-[500px] m-2'>
-                            <form>
-                                <input
-                                    defaultValue={item}
-                                    onBlur={(e) => { handleTextChange(item, e.target.value) }}
-                                    type="text"
-                                    id={`input-${item}`}
-                                    className="w-full p-4 text-gray-900 border border-gray-300 bg-gray-50"
-                                />
-                            </form>
-                        </div>
-                        <ButtonGroup/>
-                    </Reorder.Item>
-                )
-            })}
-        </Reorder.Group>
+        <ReorderGroup items={items} handleReorder={handleReorder} handleTextChange={handleTextChange} />
     )
 }
 
