@@ -29,7 +29,7 @@ function CreateNewLyric({ session }) {
     } catch (error) {
       alert('Error creating new lyric')
     } finally {
-      router.push(`account/create/${lyricId}`)
+      router.push(`/account/create/${lyricId}`)
     }
   }
 

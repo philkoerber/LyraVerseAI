@@ -3,29 +3,50 @@
 import React, { useEffect, useCallback } from 'react';
 import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 import ReorderGroup from './ReorderGroup';
+import Title from './Title';
 
-function Lyric({ lyric, session, lyricfromdb }) {
+function Lyric({ session, lyricid }) {
+
     const supabase = createClientComponentClient()
-
     const user = session?.user
 
-    const [items, setItems] = useState(lyric.lyrics);
-    const [username, setUsername] = useState()
+    const [items, setItems] = useState([]);
+    const [title, setTitle] = useState(null)
+
     const [loading, setLoading] = useState()
-        const [updateTimeout, setUpdateTimeout] = useState(null);
+    const [updateTimeout, setUpdateTimeout] = useState(null);
     
     // Dummy update function
     const updateLyric = async (items) => {
-        
-        console.log("updating lyrics...")
-        const { error } = supabase
-            .from("lyrics")
-            .insert([{}])
     };
 
+    // useEffect(() => {
+    //    console.log(lyric) 
+    // },[lyric])
+
     useEffect(() => {
-        console.log(lyricfromdb)
+        // console.log(user)
+        if(items.length===0){
+        let lyricFromDb = {};
+        const getLyricFromDb = async () => {
+            try {
+                let { data, error } = await supabase
+                .from('lyrics')
+                .select()
+                    .match({ id: lyricid })
+                if (error) throw error;
+                lyricFromDb = data
+            }
+            finally {
+                const l = lyricFromDb[0];
+                setItems(l.lyrics);
+                setTitle(l.title);
+            }
+            
+        }
+        getLyricFromDb()}
     },[])
 
 //      async function updateProfile({ username}) {
@@ -75,10 +96,15 @@ function Lyric({ lyric, session, lyricfromdb }) {
     };
 
     return (
-        <ReorderGroup
-            items={items}
-            handleReorder={handleReorder}
-            handleTextChange={handleTextChange} />
+        <div>
+            <Title
+                title={title} />
+            <ReorderGroup
+                items={items}
+                handleReorder={handleReorder}
+                handleTextChange={handleTextChange} />
+        </div>
+        
     )
 }
 
