@@ -7,15 +7,10 @@ import { useRouter } from 'next/navigation';
 function CreateNewLyric({ session }) {
 
     const supabase = createClientComponentClient()
-    
     const user = session?.user
-
     const router = useRouter();
     
-
-
     async function insertNewLyric() {
-      console.log("inserting new lyric")
       let lyricId = null
     try {
         let { data, error } = await supabase

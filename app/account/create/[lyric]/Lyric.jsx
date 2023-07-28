@@ -6,6 +6,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 import ReorderGroup from './ReorderGroup';
 import Title from './Title';
+import NewLine from './NewLine';
 
 function Lyric({ session, lyricid }) {
 
@@ -20,11 +21,24 @@ function Lyric({ session, lyricid }) {
     
     // Dummy update function
     const updateLyric = async (items) => {
+    //     try {
+    //   setLoading(true)
+
+    //   let { error } = await supabase.from('lyrics').upsert({
+    //     id: user?.id,
+    //     username,
+    //     updated_at: new Date().toISOString(),
+    //   })
+    //   if (error) throw error
+    //   alert('Profile updated!')
+    // } catch (error) {
+    //   alert('Error updating the data!')
+    // } finally {
+    //   setLoading(false)
+    // }
     };
 
-    // useEffect(() => {
-    //    console.log(lyric) 
-    // },[lyric])
+   
 
     useEffect(() => {
         // console.log(user)
@@ -47,7 +61,25 @@ function Lyric({ session, lyricid }) {
             
         }
         getLyricFromDb()}
-    },[])
+    }, [])
+    
+    useEffect(() => {
+        if (items.length > 0) {
+
+            
+            
+            // Clear previous timeout
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
+
+        //call the update function after 500ms
+            setUpdateTimeout(setTimeout(() => {
+            console.log(items)
+            updateLyric(items);
+        }, 500));
+       }
+    },[items])
 
 //      async function updateProfile({ username}) {
 //     try {
@@ -69,16 +101,6 @@ function Lyric({ session, lyricid }) {
 
     const handleReorder = (items) => {
         setItems(items);
-
-        // Clear previous timeout
-        if (updateTimeout) {
-            clearTimeout(updateTimeout);
-        }
-
-        // Set a new timeout to call the update function after 500ms
-        setUpdateTimeout(setTimeout(() => {
-            updateLyric(items);
-        }, 500));
     };
 
   const handleTextChange = (itemToUpdate, newValue) => {
@@ -95,14 +117,23 @@ function Lyric({ session, lyricid }) {
         }
     };
 
+    const addLine = async () => {
+        console.log("adding line...")
+        setItems([...items, "hey"])
+    }
+
     return (
-        <div>
+        <div className='flex flex-col justify-center items-center'>
+           
             <Title
                 title={title} />
             <ReorderGroup
                 items={items}
                 handleReorder={handleReorder}
                 handleTextChange={handleTextChange} />
+            <NewLine
+                    addLine={addLine} />
+    
         </div>
         
     )

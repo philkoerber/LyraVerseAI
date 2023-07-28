@@ -1,11 +1,11 @@
 import React from 'react';
-import { Reorder } from 'framer-motion';
+import { AnimatePresence, Reorder, motion } from 'framer-motion';
 import ButtonGroup from './ButtonGroup';
 
 function ReorderGroup({items, handleReorder, handleTextChange}) {
     return (
-                <Reorder.Group axis="y" values={items} onReorder={handleReorder} className='flex flex-col justify-center items-center'>
-            {items.map((item) => {
+                <Reorder.Group axis="y" values={items} onReorder={handleReorder} className='flex flex-col'>
+            {items.map((item, index) => {
                 return (
                     <Reorder.Item
                         key={item}
@@ -13,7 +13,9 @@ function ReorderGroup({items, handleReorder, handleTextChange}) {
                         className='flex items-center gap-x-2 cursor-move'
                     >
                         
-                        <div className='w-[500px]'>
+                        <motion.div
+                            className='w-[500px]'
+                          >
                             <form>
                                 <input
                                     defaultValue={item}
@@ -23,9 +25,9 @@ function ReorderGroup({items, handleReorder, handleTextChange}) {
                                     className="w-full mt-1 px-4 text-white bg-transparent"
                                 />
                             </form>
-                        </div>
+                        </motion.div>
                         <ButtonGroup/>
-                    </Reorder.Item>
+                        </Reorder.Item>
                 )
             })}
         </Reorder.Group>
