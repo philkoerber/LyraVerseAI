@@ -1,30 +1,35 @@
 "use client"
 import React from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+
 
 function CreateNewLyric({ session }) {
+
     const supabase = createClientComponentClient()
     
     const user = session?.user
 
+    const router = useRouter();
     
 
 
     async function insertNewLyric() {
-        console.log("inserting new lyric")
+      console.log("inserting new lyric")
+      let lyricId = null
     try {
         let { data, error } = await supabase
             .from('lyrics')
-            .insert([{
+            .insert({
           user_id: user?.id
-            }])
+            })
             .select()
       if (error) throw error
-        console.log(data)
+      lyricId = data[0].id;
     } catch (error) {
       alert('Error creating new lyric')
     } finally {
-      console.log("reaching final")
+      router.push(`account/create/${lyricId}`)
     }
   }
 
