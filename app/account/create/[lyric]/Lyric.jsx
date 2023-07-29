@@ -19,29 +19,25 @@ function Lyric({ session, lyricid }) {
     const [loading, setLoading] = useState()
     const [updateTimeout, setUpdateTimeout] = useState(null);
     
-    // Dummy update function
     const updateLyric = async (items) => {
-    //     try {
-    //   setLoading(true)
-
-    //   let { error } = await supabase.from('lyrics').upsert({
-    //     id: user?.id,
-    //     username,
-    //     updated_at: new Date().toISOString(),
-    //   })
-    //   if (error) throw error
-    //   alert('Profile updated!')
-    // } catch (error) {
-    //   alert('Error updating the data!')
-    // } finally {
-    //   setLoading(false)
-    // }
+        try {
+            let { error } = await supabase
+                .from('lyrics')
+                .update({
+                    lyrics: items,
+                })
+                .eq("id", lyricid)
+      if (error) throw error
+      console.log('Lyric updated!')
+    } catch (error) {
+      alert('Error updating the data!')
+    } finally {
+    }
     };
 
    
 
     useEffect(() => {
-        // console.log(user)
         if(items.length===0){
         let lyricFromDb = {};
         const getLyricFromDb = async () => {
@@ -65,14 +61,10 @@ function Lyric({ session, lyricid }) {
     
     useEffect(() => {
         if (items.length > 0) {
-
-            
-            
             // Clear previous timeout
         if (updateTimeout) {
             clearTimeout(updateTimeout);
         }
-
         //call the update function after 500ms
             setUpdateTimeout(setTimeout(() => {
             console.log(items)
@@ -80,24 +72,6 @@ function Lyric({ session, lyricid }) {
         }, 500));
        }
     },[items])
-
-//      async function updateProfile({ username}) {
-//     try {
-//       setLoading(true)
-
-//       let { error } = await supabase.from('profiles').upsert({
-//         id: user?.id,
-//         username,
-//         updated_at: new Date().toISOString(),
-//       })
-//       if (error) throw error
-//       alert('Profile updated!')
-//     } catch (error) {
-//       alert('Error updating the data!')
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
 
     const handleReorder = (items) => {
         setItems(items);
