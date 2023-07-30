@@ -34,9 +34,7 @@ function Lyric({ session, lyricid }) {
     } finally {
     }
     };
-
-   
-
+    
     useEffect(() => {
         if(items.length===0){
         let lyricFromDb = {};
@@ -74,11 +72,12 @@ function Lyric({ session, lyricid }) {
     },[items])
 
     const handleReorder = (items) => {
+        console.log(items)
         setItems(items);
     };
 
   const handleTextChange = (itemToUpdate, newValue) => {
-        if (itemToUpdate === newValue) {
+        if (itemToUpdate.line === newValue) {
             return; // If they are the same, no update is necessary
         }
 
@@ -86,14 +85,13 @@ function Lyric({ session, lyricid }) {
 
         if (itemIndex !== -1) {
             const updatedItems = [...items];
-            updatedItems[itemIndex] = newValue;
+            updatedItems[itemIndex] = {line: newValue, id: itemToUpdate.id};
             setItems(updatedItems);
         }
     };
 
     const addLine = async () => {
-        console.log("adding line...")
-        setItems([...items, "hey"])
+        setItems([...items, {id: Date.now(), line: "yeah yeah ok"}])
     }
 
     return (

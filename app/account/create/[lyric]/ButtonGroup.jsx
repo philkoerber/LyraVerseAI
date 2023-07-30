@@ -4,7 +4,7 @@ import React from 'react';
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
 import { FaFeatherAlt } from 'react-icons/fa';
 
-const buttonStyles = "flex items-center justify-center text-sm text-white rounded h-5 w-5 "
+const buttonStyles = "flex items-center justify-center text-sm text-white rounded h-6 w-6 "
 
 function ButtonGroup(props) {
   const { onEdit, onDelete } = props;
