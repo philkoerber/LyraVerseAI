@@ -25,6 +25,7 @@ function Lyric({ session, lyricid }) {
                 .from('lyrics')
                 .update({
                     lyrics: items,
+                    title: title
                 })
                 .eq("id", lyricid)
       if (error) throw error
@@ -69,7 +70,7 @@ function Lyric({ session, lyricid }) {
             updateLyric(items);
         }, 500));
        }
-    },[items])
+    },[items, title])
 
     const handleReorder = (items) => {
         console.log(items)
@@ -90,21 +91,39 @@ function Lyric({ session, lyricid }) {
         }
     };
 
+    const handleTitleChange = (oldTitle, newValue) => {
+        if (oldTitle === newValue) {
+            return; // If they are the same, no update is necessary
+        }
+        else {
+            setTitle(newValue)
+        }
+    };
+
     const addLine = async () => {
         setItems([...items, {id: Date.now(), line: "yeah yeah ok"}])
+    }
+
+    const handleButton = (button) => {
+        if (button.button === "delete") {
+            setItems(items => items.filter(item => item.id !== button.id));
+        }
     }
 
     return (
         <div className='flex flex-col justify-center items-center'>
            
             <Title
-                title={title} />
+                title={title}
+                handleTitleChange={handleTitleChange}/>
+            <NewLine
+                    addLine={addLine} />
             <ReorderGroup
                 items={items}
                 handleReorder={handleReorder}
-                handleTextChange={handleTextChange} />
-            <NewLine
-                    addLine={addLine} />
+                handleTextChange={handleTextChange}
+                handleButton={handleButton}/>
+            
     
         </div>
         
