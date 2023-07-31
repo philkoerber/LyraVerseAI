@@ -1,7 +1,7 @@
 import './globals.css'
-import { Ysabeau } from 'next/font/google'
+import { Urbanist } from 'next/font/google'
 
-const ysabeau = Ysabeau({ subsets: ['latin'] })
+const urbanist = Urbanist({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'LyraVerseAI',
@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={ysabeau.className}
+        className={urbanist.className}
         suppressHydrationWarning={true}
       >{children}</body>
     </html>
