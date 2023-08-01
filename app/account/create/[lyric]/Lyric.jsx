@@ -8,7 +8,12 @@ import ReorderGroup from './ReorderGroup';
 import Title from './Title';
 import NewLine from './NewLine';
 
+import {MdArrowBackIosNew} from "react-icons/md"
+import { useRouter } from 'next/navigation';
+
 function Lyric({ session, lyricid }) {
+
+    const router = useRouter()
 
     const supabase = createClientComponentClient()
     const user = session?.user
@@ -110,9 +115,20 @@ function Lyric({ session, lyricid }) {
         }
     }
 
+    const handleBackButton = () => {
+        router.push(`/account/create/`)
+    }
+
     return (
+        <div>
+            <button
+                className='text-2xl text-white hover:text-gray-300'
+                onClick={handleBackButton}>
+                <MdArrowBackIosNew/>
+            </button>
+        
         <div className='flex flex-col justify-center items-center'>
-           
+            
             <Title
                 title={title}
                 handleTitleChange={handleTitleChange}/>
@@ -126,6 +142,8 @@ function Lyric({ session, lyricid }) {
             
     
         </div>
+        </div>
+        
         
     )
 }

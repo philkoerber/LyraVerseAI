@@ -2,7 +2,7 @@ import React from 'react';
 
 function Title({title, handleTitleChange}) {
     return (
-        <div className='flex justify-center items-center text-2xl text-white font-extrabold mb-2'>
+        <div className='flex justify-center items-center text-4xl text-white font-extrabold mb-2'>
             <input
                                     defaultValue={title}
                                     onBlur={(e) => { handleTitleChange(title, e.target.value) }}

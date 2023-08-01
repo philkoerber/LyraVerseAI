@@ -5,9 +5,12 @@ import CreateNewLyric from './CreateNewLyric';
 import { motion } from 'framer-motion';
 
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
+import { useRouter } from 'next/navigation';
 
 
 function formatDateString(dateString) {
+        
+
   const dateObj = new Date(dateString);
 
   // Function to pad single-digit numbers with leading zeros
@@ -26,19 +29,21 @@ function formatDateString(dateString) {
 }
 
 function SavedLyrics({ usersLyrics, session }) {
+
+    const router = useRouter();
     
     useEffect(() => {
         console.log(usersLyrics)
     }, [])
 
     async function handleClick(id) {
-        console.log(id)
+        router.push(`/account/create/${id}`)
     }
     
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {usersLyrics?.map((lyric, index) => {
-                console.log(lyric.created_at)
+                const lyricsLength = lyric.lyrics.length
                 return (
                     <div
                         key={lyric.id}
@@ -51,8 +56,12 @@ function SavedLyrics({ usersLyrics, session }) {
                             lyric.lyrics.map((line) => {
                                 return (<motion.div
                                     className='h-fit'
-      animate={{ y: ["-100%", "100%", "-100%"], }}
-      transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: index/4}}
+                                    animate={
+                                    lyricsLength>4?
+                                            { y: [lyricsLength * 10, lyricsLength * -10, lyricsLength * 10], }
+                                            :
+                                        {}}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: index/4}}
     >
       <p>{line.line}</p>
     </motion.div>)
