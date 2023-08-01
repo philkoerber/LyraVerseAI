@@ -33,12 +33,16 @@ function CreateNewLyric({ session }) {
     }
 
     return (
+        <div
+            className='w-[200px] h-[150px] flex justify-center items-center rounded-full'
+        >
         <button
-            className='w-[180px] h-[100px] flex flex-col justify-center items-center p-1 bg-green-700 hover:bg-green-800 text-white rounded'
-            onClick={handleClick}>
-            <div>Create something new...</div>
-            <div className='text-3xl'>+</div>
+          className='w-[100px] h-[75px] bg-lime-500 hover:bg-lime-300 rounded-full border-black border-[1px] flex justify-center items-center shadow-lg transition duration-100'
+          onClick={handleClick}>
+          <p className='text-3xl'>+</p>
         </button>
+            
+        </div>
     );
 }
 
