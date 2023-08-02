@@ -5,6 +5,7 @@ import CreateNewLyric from './CreateNewLyric';
 import { motion } from 'framer-motion';
 
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
+import {BiDuplicate, BiCopy} from "react-icons/bi"
 import { useRouter } from 'next/navigation';
 
 
@@ -41,14 +42,15 @@ function SavedLyrics({ usersLyrics, session }) {
     }
     
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {usersLyrics?.map((lyric, index) => {
                 const lyricsLength = lyric.lyrics.length
                 return (
+                    <div className='w-fit h-fit'>
                     <div
                         key={lyric.id}
                         onClick={()=>{handleClick(lyric.id)}}
-                        className='w-[200px] h-[150px] relative bg-orange-500 hover:bg-orange-200 shadow-lg overflow-hidden rounded cursor-pointer transition duration-100'>
+                        className='w-[200px] h-[150px] relative bg-orange-500 hover:bg-orange-200 shadow-lg overflow-hidden rounded cursor-pointer border-[1px] border-black transition duration-200'>
                         <div className='font-extrabold z-30 text-xl w-full text-center absolute bg-black text-gray-200 uppercase'>
                             {lyric.title}
                             </div>
@@ -69,9 +71,24 @@ function SavedLyrics({ usersLyrics, session }) {
                         }</div>
                         <div className='absolute bottom-0 pr-1 text-right text-sm w-full bg-black text-gray-200'>
                             {formatDateString(lyric.created_at)}
+                            </div>
+                            
+                        
+                        
                         </div>
-                        <RiDeleteBinLine />
-                    </div>
+                        <div className='text-white text-xl flex z-100 w-full mt-2 fill-white'>
+                            <button className='flex-1 flex justify-center hover:text-orange-500 transition duration-200'>
+                                <BiCopy/>
+                            </button>
+                            <button className='flex-1 flex justify-center hover:text-orange-500 transition duration-200'>
+                                <BiDuplicate/>
+                            </button>
+                            <button className='flex-1 flex justify-center hover:text-red-600 transition duration-200'>
+                                <RiDeleteBinLine/>
+                            </button>
+                            
+                            </div>
+                        </div>
                 )
             })}
             <CreateNewLyric session={session} />
