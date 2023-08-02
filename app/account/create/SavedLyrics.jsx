@@ -5,7 +5,7 @@ import CreateNewLyric from './CreateNewLyric';
 import { motion } from 'framer-motion';
 
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
-import {BiDuplicate, BiCopy} from "react-icons/bi"
+import { BiDuplicate, BiCopy } from "react-icons/bi"
 import { useRouter } from 'next/navigation';
 
 
@@ -42,7 +42,7 @@ function SavedLyrics({ usersLyrics, session }) {
     }
     
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-14'>
             {usersLyrics?.map((lyric, index) => {
                 const lyricsLength = lyric.lyrics.length
                 return (
