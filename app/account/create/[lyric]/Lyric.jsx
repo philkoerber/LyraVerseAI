@@ -115,15 +115,13 @@ function Lyric({ session, lyricid }) {
         }
     }
 
-    const handleBackButton = () => {
-        router.push(`/account/create/`)
-    }
+
 
     return (
         <div>
             <button
                 className='text-2xl text-white hover:text-gray-300'
-                onClick={handleBackButton}>
+                >
                 <MdArrowBackIosNew/>
             </button>
         

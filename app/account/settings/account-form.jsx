@@ -47,9 +47,8 @@ export default function AccountForm({ session }) {
         updated_at: new Date().toISOString(),
       })
       if (error) throw error
-      alert('Profile updated!')
     } catch (error) {
-      alert('Error updating the data!')
+      console.log('Error updating the data!')
     } finally {
       setLoading(false)
     }
