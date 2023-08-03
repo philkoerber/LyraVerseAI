@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreateNewLyric from './CreateNewLyric';
 import { motion } from 'framer-motion';
 
@@ -8,8 +8,30 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { BiDuplicate, BiCopy } from "react-icons/bi"
 import { useRouter } from 'next/navigation';
 import formatDateString from '@/app/utils/formatDateString';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 function SavedLyrics({ usersLyrics, session }) {
+
+    const [lyrics, setLyric] = useState(usersLyrics)
+
+    const supabase = createClientComponentClient()
+
+
+    async function deleteLyric(id) {
+    try {
+        let { data, error } = await supabase
+            .from('lyrics')
+            .delete()
+            .eq("id", id)
+            .select("*", id)
+        if (error) throw error
+        console.log(data)
+    } catch (error) {
+      console.log('Error deleting lyric')
+    } finally {
+      console.log("ok")
+    }
+  }
 
     const router = useRouter();
     
@@ -20,7 +42,7 @@ function SavedLyrics({ usersLyrics, session }) {
         router.push(`/account/create/${id}`)
     }
 
-    const handleDeleteButton = (lyricId) => {
+    const handleDuplicateButton = (lyricId) => {
         console.log(lyricId)
     }
 
@@ -28,14 +50,14 @@ function SavedLyrics({ usersLyrics, session }) {
         console.log(lyricId)
     }
 
-    const handleDuplicateButton = (lyricId) => {
-        console.log(lyricId)
+    const handleDeleteButton = async (lyricId) => {
+        await deleteLyric(lyricId)
     }
     
     return (
         <div
             className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-14'>
-            {usersLyrics?.map((lyric, index) => {
+            {lyrics?.map((lyric, index) => {
                 const lyricsLength = lyric.lyrics.length
                 
                 return (
