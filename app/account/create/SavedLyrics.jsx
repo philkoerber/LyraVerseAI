@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import CreateNewLyric from './CreateNewLyric';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { BiDuplicate, BiCopy } from "react-icons/bi"
@@ -10,9 +10,9 @@ import { useRouter } from 'next/navigation';
 import formatDateString from '@/app/utils/formatDateString';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-function SavedLyrics({ usersLyrics, session }) {
+function SavedLyrics({ session }) {
 
-    const [lyrics, setLyric] = useState(usersLyrics)
+    const [lyrics, setLyrics] = useState(null)
 
     const supabase = createClientComponentClient()
 
@@ -23,9 +23,11 @@ function SavedLyrics({ usersLyrics, session }) {
             .from('lyrics')
             .delete()
             .eq("id", id)
-            .select("*", id)
+            .select()
         if (error) throw error
         console.log(data)
+        setLyrics(prevLyrics => prevLyrics.filter(lyric => lyric.id !== id));
+
     } catch (error) {
       console.log('Error deleting lyric')
     } finally {
@@ -36,7 +38,27 @@ function SavedLyrics({ usersLyrics, session }) {
     const router = useRouter();
     
     useEffect(() => {
-    }, [])
+        if (!lyrics) {
+        let fetchData = [];
+        const fetchLyrics = async () => {
+            try {
+                const { data: usersLyrics } = await supabase
+                    .from("lyrics")
+                    .select();
+                fetchData = usersLyrics;
+            }
+            finally {
+                setLyrics(fetchData)
+            }
+
+        }
+        fetchLyrics()
+        }
+
+        else {
+            console.log(lyrics)
+        }
+    }, [lyrics])
 
     async function handleClick(id) {
         router.push(`/account/create/${id}`)
@@ -55,8 +77,10 @@ function SavedLyrics({ usersLyrics, session }) {
     }
     
     return (
+    
         <div
             className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-14'>
+            <AnimatePresence>
             {lyrics?.map((lyric, index) => {
                 const lyricsLength = lyric.lyrics.length
                 
@@ -65,8 +89,9 @@ function SavedLyrics({ usersLyrics, session }) {
                     <motion.div
                         className='w-fit h-fit'
                         key={lyric.id}
-                        initial={{ opacity: 0 }}
-                        animate={{opacity: 1}}>
+                        initial={{ opacity: 0}}
+                        animate={{ opacity: 1}}
+                        exit={{ opacity: 0}}>
                         <div
                         onClick={()=>{handleClick(lyric.id)}}
                         className='w-[200px] h-[150px] relative bg-orange-500 hover:bg-orange-200 shadow-lg overflow-hidden rounded cursor-pointer border-[1px] border-black transition duration-200'>
@@ -75,7 +100,8 @@ function SavedLyrics({ usersLyrics, session }) {
                             </div>
                         <div className='flex-col gap-1 h-full w-full flex justify-center items-center'>{
                             lyric.lyrics.map((line) => {
-                                return (<motion.div
+                                return (
+                                    <motion.div
                                     className='h-fit'
                                     key={line.id}
                                     animate={
@@ -119,9 +145,11 @@ function SavedLyrics({ usersLyrics, session }) {
                         </motion.div>
                 )
             })}
+                            </AnimatePresence>
             <CreateNewLyric session={session} />
 
-        </div>
+            </div>
+
     );
 }
 

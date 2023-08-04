@@ -34,9 +34,8 @@ function Lyric({ session, lyricid }) {
                 })
                 .eq("id", lyricid)
       if (error) throw error
-      console.log('Lyric updated!')
     } catch (error) {
-      alert('Error updating the data!')
+      console.log('Error updating the data!')
     } finally {
     }
     };

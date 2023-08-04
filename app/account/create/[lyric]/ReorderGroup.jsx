@@ -12,7 +12,6 @@ function ReorderGroup({ items, handleReorder, handleTextChange, handleButton }) 
     return (
                 <Reorder.Group axis="y" values={items} onReorder={handleReorder} className='flex flex-col'>
             {items.map((item) => {
-                console.log(item)
                 return (
                     <Reorder.Item
                         key={item.id}
