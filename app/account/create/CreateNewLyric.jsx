@@ -41,7 +41,7 @@ function CreateNewLyric({ session }) {
       initial={{ opacity: 0 }}
       animate={{opacity: 1}}>
       <button
-        className='w-[75px] h-[75px] bg-lime-500 hover:bg-lime-400 rounded-full border-black border-[1px] flex justify-center items-center shadow-lg transition duration-100'
+        className='w-[75px] h-[75px] bg-transparent hover:bg-orange-200 rounded-full border-black border-2 flex justify-center items-center shadow-lg transition duration-100'
         onClick={handleClick}
         disabled={loading} // Disable the button when loading is true
       >

@@ -14,6 +14,7 @@ import Spinner from '@/app/utils/Spinner';
 function SavedLyrics({ session }) {
 
     const [lyrics, setLyrics] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const supabase = createClientComponentClient()
 
@@ -26,7 +27,6 @@ function SavedLyrics({ session }) {
             .eq("id", id)
             .select()
         if (error) throw error
-        console.log(data)
         setLyrics(prevLyrics => prevLyrics.filter(lyric => lyric.id !== id));
 
     } catch (error) {
@@ -61,8 +61,10 @@ function SavedLyrics({ session }) {
         }
     }, [lyrics])
 
-    async function handleClick(id) {
-        router.push(`/account/create/${id}`)
+    function handleClick(id) {
+        console.log(id)
+        setLoading(true);
+        router.push(`/account/create/${id}`);
     }
 
     const handleDuplicateButton = (lyricId) => {
@@ -77,7 +79,15 @@ function SavedLyrics({ session }) {
         await deleteLyric(lyricId)
     }
 
-    if (lyrics)
+    if(loading){
+        return(<motion.div
+            initial={{ opacity: 0 }}
+            animate={{opacity: 1}}
+            className='flex justify-center items-center'>
+            <Spinner/>
+                </motion.div>)
+    }
+    else if (lyrics)
         {
     return (
     
@@ -155,6 +165,8 @@ function SavedLyrics({ session }) {
 
         );
     }
+
+    
     
     else {
         return (<motion.div
