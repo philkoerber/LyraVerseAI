@@ -9,6 +9,7 @@ import { BiDuplicate, BiCopy } from "react-icons/bi"
 import { useRouter } from 'next/navigation';
 import formatDateString from '@/app/utils/formatDateString';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Spinner from '@/app/utils/Spinner';
 
 function SavedLyrics({ session }) {
 
@@ -75,11 +76,13 @@ function SavedLyrics({ session }) {
     const handleDeleteButton = async (lyricId) => {
         await deleteLyric(lyricId)
     }
-    
+
+    if (lyrics)
+        {
     return (
     
         <div
-            className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-14'>
+            className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 content-evenly gap-y-10 gap-x-14'>
             <AnimatePresence>
             {lyrics?.map((lyric, index) => {
                 const lyricsLength = lyric.lyrics.length
@@ -150,7 +153,17 @@ function SavedLyrics({ session }) {
 
             </div>
 
-    );
+        );
+    }
+    
+    else {
+        return (<motion.div
+            initial={{ opacity: 0 }}
+            animate={{opacity: 1}}
+            className='flex justify-center items-center'>
+            Loading lyrics...
+                </motion.div>)
+    }
 }
 
 export default SavedLyrics;

@@ -120,6 +120,7 @@ function Lyric({ session, lyricid }) {
         <div>
             <button
                 className='text-2xl text-white hover:text-gray-300'
+                onClick={()=>{router.push("/account/create")}}
                 >
                 <MdArrowBackIosNew/>
             </button>

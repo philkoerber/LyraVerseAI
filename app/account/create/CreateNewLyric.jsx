@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { GrAdd } from 'react-icons/gr';
 import Spinner from '@/app/utils/Spinner';
 
+import { motion } from 'framer-motion';
+
 function CreateNewLyric({ session }) {
   const supabase = createClientComponentClient();
   const user = session?.user;
@@ -34,7 +36,10 @@ function CreateNewLyric({ session }) {
   };
 
   return (
-    <div className='w-[200px] h-[150px] flex justify-center items-center rounded-full'>
+    <motion.div
+      className='w-[200px] h-[150px] flex justify-center items-center rounded-full'
+      initial={{ opacity: 0 }}
+      animate={{opacity: 1}}>
       <button
         className='w-[75px] h-[75px] bg-lime-500 hover:bg-lime-400 rounded-full border-black border-[1px] flex justify-center items-center shadow-lg transition duration-100'
         onClick={handleClick}
@@ -43,7 +48,7 @@ function CreateNewLyric({ session }) {
         {/* Conditionally render the Spinner or GrAdd icon */}
         {showSpinner ? <Spinner /> : <p className='text-xl text-white'><GrAdd /></p>}
       </button>
-    </div>
+    </motion.div>
   );
 }
 
