@@ -10,7 +10,7 @@ import NewLine from "./NewLine";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { editLine } from "../aiCalls";
+import { createNewLine } from "../aiCalls";
 
 function Lyric({ session, lyricid }) {
   const router = useRouter();
@@ -20,6 +20,8 @@ function Lyric({ session, lyricid }) {
 
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState(null);
+
+  const [wholeLyric, setWholeLyric] = useState(items);
 
   const [loading, setLoading] = useState();
   const [updateTimeout, setUpdateTimeout] = useState(null);
@@ -74,6 +76,12 @@ function Lyric({ session, lyricid }) {
         }, 500)
       );
     }
+
+    setWholeLyric(
+      items.map((item) => {
+        return item.line;
+      })
+    );
   }, [items, title]);
 
   const handleReorder = (items) => {
@@ -103,7 +111,7 @@ function Lyric({ session, lyricid }) {
     }
   };
 
-  const addLine = async () => {
+  const addEmptyLine = async () => {
     setItems([...items, { id: Date.now(), line: "yeah yeah ok" }]);
   };
 
@@ -111,9 +119,15 @@ function Lyric({ session, lyricid }) {
     if (button.button === "delete") {
       setItems((items) => items.filter((item) => item.id !== button.id));
     } else if (button.button === "create") {
-      const data = await editLine();
-      console.log(data);
     }
+  };
+
+  const addAiLine = async () => {
+    const line = wholeLyric[wholeLyric.length - 1];
+    const data = await createNewLine({
+      question: line,
+    });
+    setItems([...items, { id: Date.now(), line: data }]);
   };
 
   return (
@@ -126,9 +140,9 @@ function Lyric({ session, lyricid }) {
         <MdArrowBackIosNew />
       </button>
 
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center gap-8">
         <Title title={title} handleTitleChange={handleTitleChange} />
-        <NewLine addLine={addLine} />
+        <NewLine addEmptyLine={addEmptyLine} addAiLine={addAiLine} />
         <ReorderGroup
           items={items}
           handleReorder={handleReorder}

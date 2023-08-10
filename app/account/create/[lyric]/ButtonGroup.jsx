@@ -1,35 +1,17 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
-import { FaFeatherAlt } from 'react-icons/fa';
+import React from "react";
 
-const buttonStyles = "flex items-center justify-center text-lg text-white rounded h-6 w-6 "
+const buttonStyles =
+  "flex items-center justify-center text-lg text-white rounded h-6 w-6 text-gray-400 ";
 
-function ButtonGroup({handleButton}) {
-
+function ButtonGroup({ handleButton }) {
   return (
-      <div className="flex space-x-2">
-          <button
-        onClick={()=>handleButton("create")}
-        className={buttonStyles + "hover:text-green-500"}
-      >
-        <FaFeatherAlt />
-        
-      </button>
+    <div className="flex space-x-2">
       <button
-        onClick={()=>handleButton("edit")}
-        className={buttonStyles + "hover:text-blue-500"}
-      >
-        <RiEdit2Line />
-        
-      </button>
-      <button
-        onClick={()=>handleButton("delete")}
-        className={buttonStyles + "hover:text-red-500"}
-      >
-        <RiDeleteBinLine />
-        
+        onClick={() => handleButton("delete")}
+        className={buttonStyles + "hover:text-white"}>
+        x
       </button>
     </div>
   );
