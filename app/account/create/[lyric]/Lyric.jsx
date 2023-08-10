@@ -138,7 +138,7 @@ function Lyric({ session, lyricid }) {
   return (
     <div className="w-[80%]">
       <button
-        className="text-2xl text-white hover:text-gray-300"
+        className="text-2xl hover:text-gray-600"
         onClick={() => {
           router.push("/account/create");
         }}>

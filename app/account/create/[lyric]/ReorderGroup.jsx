@@ -36,7 +36,7 @@ function ReorderGroup({
                   type="text"
                   id={`input-${item}`}
                   autoComplete="off"
-                  className="w-full mt-1 px-4 text-white bg-transparent"
+                  className="w-full mt-1 px-4 bg-transparent"
                 />
               </form>
             </motion.div>
