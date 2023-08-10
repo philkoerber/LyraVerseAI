@@ -1,17 +1,26 @@
 "use client";
 
 import React from "react";
+import { FaFeatherAlt } from "react-icons/fa";
+import { FaRegCopy } from "react-icons/fa";
 
-const buttonStyles =
-  "flex items-center justify-center text-lg text-white rounded h-6 w-6 text-gray-400 ";
-
-function ButtonGroup({ handleButton }) {
+function ButtonGroup({ addEmptyLine, addAiLine, copyToClipboard }) {
   return (
-    <div className="flex space-x-2">
+    <div className="flex gap-4">
       <button
-        onClick={() => handleButton("delete")}
-        className={buttonStyles + "hover:text-white"}>
-        x
+        className="flex text-white bg-gray-500 hover:bg-gray-600 w-10 h-10  justify-center items-center mt-2 text-3xl rounded"
+        onClick={addEmptyLine}>
+        +
+      </button>
+      <button
+        className="flex text-white bg-gray-500 hover:bg-gray-600 w-10 h-10  justify-center items-center mt-2 text-2xl rounded"
+        onClick={addAiLine}>
+        <FaFeatherAlt />
+      </button>
+      <button
+        className="flex text-white bg-gray-500 hover:bg-gray-600 w-10 h-10  justify-center items-center mt-2 text-2xl rounded"
+        onClick={copyToClipboard}>
+        <FaRegCopy />
       </button>
     </div>
   );

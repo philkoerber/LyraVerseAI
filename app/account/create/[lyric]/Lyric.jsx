@@ -6,7 +6,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import ReorderGroup from "./ReorderGroup";
 import Title from "./Title";
-import NewLine from "./NewLine";
+import ButtonGroup from "./ButtonGroup";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useRouter } from "next/navigation";
@@ -130,6 +130,11 @@ function Lyric({ session, lyricid }) {
     setItems([...items, { id: Date.now(), line: data }]);
   };
 
+  const copyToClipboard = () => {
+    const formattedText = wholeLyric.join("\n");
+    navigator.clipboard.writeText(formattedText);
+  };
+
   return (
     <div className="w-[80%]">
       <button
@@ -142,7 +147,11 @@ function Lyric({ session, lyricid }) {
 
       <div className="flex flex-col justify-center items-center gap-8">
         <Title title={title} handleTitleChange={handleTitleChange} />
-        <NewLine addEmptyLine={addEmptyLine} addAiLine={addAiLine} />
+        <ButtonGroup
+          addEmptyLine={addEmptyLine}
+          addAiLine={addAiLine}
+          copyToClipboard={copyToClipboard}
+        />
         <ReorderGroup
           items={items}
           handleReorder={handleReorder}
