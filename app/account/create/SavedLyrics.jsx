@@ -134,7 +134,7 @@ function SavedLyrics({ session }) {
                       {formatDateString(lyric.created_at)}
                     </div>
                   </div>
-                  <div className="text-white text-xl flex z-100 w-full mt-2 fill-white">
+                  <div className="text-xl flex z-100 w-full mt-2 fill-white">
                     <button
                       className="flex-1 flex justify-center hover:text-orange-500 transition duration-200"
                       onClick={() => {

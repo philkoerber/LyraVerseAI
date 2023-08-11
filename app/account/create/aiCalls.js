@@ -7,7 +7,7 @@ export async function createNewLine(data) {
       "https://flowise-ph0q.onrender.com/api/v1/prediction/5f8310fd-276d-46f2-92ac-bf8016eed4db",
       {
         headers: {
-          Authorization: "Bearer Yk0kh20xGpJFJFQufDpwC2hV7E0qsFTprGT05DgFYQA=",
+          Authorization: "Bearer H67BBmrDEmyDZEuvhsSCwlGfg4eHmWfvCCw9RqYE68s=",
           Accept: "application/json",
           "Content-Type": "application/json",
         },
