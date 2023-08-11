@@ -12,7 +12,7 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { createNewLine } from "../aiCalls";
 
-function Lyric({ session, lyricid }) {
+function Lyric({ session, lyricid, config }) {
   const router = useRouter();
 
   const supabase = createClientComponentClient();
@@ -124,9 +124,12 @@ function Lyric({ session, lyricid }) {
 
   const addAiLine = async () => {
     const line = wholeLyric[wholeLyric.length - 1];
-    const data = await createNewLine({
-      question: line,
-    });
+    const data = await createNewLine(
+      {
+        question: line,
+      },
+      config
+    );
     setItems([...items, { id: Date.now(), line: data }]);
   };
 

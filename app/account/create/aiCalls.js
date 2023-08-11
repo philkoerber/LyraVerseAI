@@ -1,11 +1,12 @@
-export async function createNewLine(data) {
+export async function createNewLine(data, config) {
   const body = JSON.stringify(data);
 
+  console.log(config);
+
   try {
-    console.log(data);
-    const response = await fetch(process.env.FLOWISE_URI, {
+    const response = await fetch(config.FLOWISE_URI, {
       headers: {
-        Authorization: "Bearer " + process.env.FLOWISE_BEARER,
+        Authorization: "Bearer " + config.FLOWISE_BEARER,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
