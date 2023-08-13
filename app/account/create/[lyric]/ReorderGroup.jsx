@@ -1,6 +1,7 @@
 import React from "react";
-import { Reorder, motion } from "framer-motion";
+import { Reorder, motion, useDragControls } from "framer-motion";
 import LineButtons from "./LineButtons";
+import { VscGrabber } from "react-icons/vsc";
 
 function ReorderGroup({
   items,
@@ -11,6 +12,8 @@ function ReorderGroup({
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const controls = useDragControls();
 
   return (
     <Reorder.Group
@@ -24,8 +27,13 @@ function ReorderGroup({
             key={item.id}
             value={item}
             className="flex items-center gap-x-2 cursor-move"
+            dragListener={false}
+            dragControls={controls}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}>
+            <div onPointerDown={(e) => controls.start(e)}>
+              <VscGrabber />
+            </div>
             <motion.div className="w-[500px]">
               <form onSubmit={(e) => handleSubmit(e)}>
                 <input
