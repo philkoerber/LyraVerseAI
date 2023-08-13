@@ -15,12 +15,12 @@ function Header(props) {
       <div className="space-x-4 text-xl">
         <a
           href="/account/create"
-          className="hover:text-gray-400 transition duration-300">
+          className="hover:text-green-200 transition duration-300">
           Create
         </a>
         <a
           href="/account/settings"
-          className="hover:text-gray-400 transition duration-300">
+          className="hover:text-green-200 transition duration-300">
           Profile
         </a>
       </div>

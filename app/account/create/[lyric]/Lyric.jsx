@@ -112,7 +112,7 @@ function Lyric({ session, lyricid, config }) {
   };
 
   const addEmptyLine = async () => {
-    setItems([...items, { id: Date.now(), line: "yeah yeah ok" }]);
+    setItems([...items, { id: Date.now(), line: "another line..." }]);
   };
 
   const handleButton = async (button) => {
@@ -123,14 +123,22 @@ function Lyric({ session, lyricid, config }) {
   };
 
   const addAiLine = async () => {
-    const line = wholeLyric[wholeLyric.length - 1];
-    const data = await createNewLine(
-      {
-        question: line,
-      },
-      config
-    );
-    setItems([...items, { id: Date.now(), line: data }]);
+    try {
+      setLoading(true);
+      const line = wholeLyric[wholeLyric.length - 1];
+      const data = await createNewLine(
+        {
+          question: line,
+        },
+        config
+      );
+      setItems([...items, { id: Date.now(), line: data }]);
+    } catch (error) {
+      // Handle the error, if needed
+      console.error("Error in creating AI line:", error);
+    } finally {
+      setLoading(false); // Set loading back to false whether the call succeeds or fails
+    }
   };
 
   const copyToClipboard = () => {
@@ -139,7 +147,7 @@ function Lyric({ session, lyricid, config }) {
   };
 
   return (
-    <div className="w-[80%]">
+    <div className="w-full md:w-[80%]">
       <button
         className="text-2xl hover:text-gray-500"
         onClick={() => {
