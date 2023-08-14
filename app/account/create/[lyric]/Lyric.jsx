@@ -10,7 +10,7 @@ import ButtonGroup from "./ButtonGroup";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { createNewLine } from "../aiCalls";
+import { createNewLine, readLyric } from "../aiCalls";
 
 function Lyric({ session, lyricid, config }) {
   const router = useRouter();
@@ -146,6 +146,18 @@ function Lyric({ session, lyricid, config }) {
     navigator.clipboard.writeText(formattedText);
   };
 
+  const reciteLyric = async () => {
+    try {
+      setLoading(true);
+      const data = await readLyric(wholeLyric, config);
+      console.log(data);
+    } catch (e) {
+      console.log("error reading lyic: " + e);
+    } finally {
+      console.log("you should hear lyric now...");
+    }
+  };
+
   return (
     <div className="w-full md:w-[80%]">
       <button
@@ -162,6 +174,7 @@ function Lyric({ session, lyricid, config }) {
           addEmptyLine={addEmptyLine}
           addAiLine={addAiLine}
           copyToClipboard={copyToClipboard}
+          reciteLyric={reciteLyric}
         />
         <ReorderGroup
           items={items}
