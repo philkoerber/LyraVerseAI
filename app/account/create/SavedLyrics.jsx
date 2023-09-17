@@ -177,7 +177,7 @@ function SavedLyrics({ session }) {
                   </div>
                   <div className="text-xl flex z-100 w-full mt-2 fill-white">
                     <button
-                      className="flex-1 flex justify-center hover:text-green-600 transition duration-200"
+                      className="flex-1 flex justify-center hover:text-green-500 transition duration-200"
                       onClick={() => {
                         handleDuplicateButton(lyric.id);
                       }}>
