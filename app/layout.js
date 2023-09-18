@@ -8,7 +8,7 @@ export const metadata = {
   description: "Inspire, be insprired",
 };
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({ children }) {
   return (
