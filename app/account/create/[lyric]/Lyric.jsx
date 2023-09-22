@@ -85,7 +85,6 @@ function Lyric({ session, lyricid, config }) {
   }, [items, title]);
 
   const handleReorder = (items) => {
-    console.log(items);
     setItems(items);
   };
 

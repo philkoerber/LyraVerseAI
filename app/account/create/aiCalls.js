@@ -3,9 +3,6 @@ const hf = new HfInference("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");
 
 export async function createNewLine(data, config) {
   const body = JSON.stringify(data);
-
-  console.log(config);
-
   try {
     const response = await fetch(config.FLOWISE_URI, {
       headers: {
